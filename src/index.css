@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply m-0 font-sans bg-neutral-50 text-neutral-900 leading-relaxed antialiased transition-colors duration-300;
+  }
+  .dark body {
+    @apply bg-neutral-950 text-neutral-100;
+  }
+  #root {
+    @apply min-h-screen;
+  }
+  a {
+    @apply text-blue-600 no-underline transition-colors duration-200;
+  }
+  a:hover {
+    @apply text-blue-700;
+  }
+  .dark a {
+    @apply text-blue-400;
+  }
+  .dark a:hover {
+    @apply text-blue-300;
+  }
+}
+
+/* Loader keyframes */
+@keyframes loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes loader-bounce {
+  to {
+    transform: scaleY(0.4);
+  }
+}
+@keyframes orb-float {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  33% {
+    transform: translate(20px, -20px);
+  }
+  66% {
+    transform: translate(-15px, 15px);
+  }
+}
