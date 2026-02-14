@@ -1,12 +1,47 @@
 import { useState, useEffect, useRef } from "react";
 
+const PARALLAX_STRENGTH = 20;
+
+const ORBS = [
+  {
+    position: "top-[8%] right-[15%]",
+    size: "h-[280px] w-[320px]",
+    parallax: 1.2,
+    blobKeyframe: "blob-1",
+    wanderDelay: "0s",
+    centered: false,
+  },
+  {
+    position: "bottom-[15%] left-[8%]",
+    size: "h-[220px] w-[180px]",
+    parallax: 0.8,
+    blobKeyframe: "blob-2",
+    wanderDelay: "-3s",
+    centered: false,
+  },
+  {
+    position: "left-1/2 top-1/2",
+    size: "h-[140px] w-[170px]",
+    parallax: 1.5,
+    blobKeyframe: "blob-3",
+    wanderDelay: "-6s",
+    centered: true,
+  },
+  {
+    position: "top-[35%] right-[35%]",
+    size: "h-[100px] w-[140px]",
+    parallax: 1.1,
+    blobKeyframe: "blob-4",
+    wanderDelay: "-9s",
+    centered: false,
+  },
+];
+
 export function HeroGraphic() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [pointer, setPointer] = useState<{ x: number; y: number } | null>(null);
-  const [smooth, setSmooth] = useState({ x: 0, y: 0 });
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
   const targetRef = useRef({ x: 0, y: 0 });
   const rafRef = useRef<number>();
-  const isFirstRef = useRef(true);
 
   useEffect(() => {
     const handleMove = (e: MouseEvent) => {
@@ -19,16 +54,14 @@ export function HeroGraphic() {
         x >= 0 && x <= rect.width && y >= 0 && y <= rect.height;
 
       if (inBounds) {
-        const next = { x, y };
-        setPointer(next);
-        targetRef.current = next;
-        if (isFirstRef.current) {
-          setSmooth(next);
-          isFirstRef.current = false;
-        }
+        const normX = (x / rect.width - 0.5) * 2;
+        const normY = (y / rect.height - 0.5) * 2;
+        targetRef.current = {
+          x: normX * PARALLAX_STRENGTH,
+          y: normY * PARALLAX_STRENGTH,
+        };
       } else {
-        setPointer(null);
-        isFirstRef.current = true;
+        targetRef.current = { x: 0, y: 0 };
       }
     };
 
@@ -36,12 +69,10 @@ export function HeroGraphic() {
       start + (end - start) * t;
 
     const animate = () => {
-      if (pointer) {
-        setSmooth((prev) => ({
-          x: lerp(prev.x, targetRef.current.x, 0.12),
-          y: lerp(prev.y, targetRef.current.y, 0.12),
-        }));
-      }
+      setOffset((prev) => ({
+        x: lerp(prev.x, targetRef.current.x, 0.08),
+        y: lerp(prev.y, targetRef.current.y, 0.08),
+      }));
       rafRef.current = requestAnimationFrame(animate);
     };
     rafRef.current = requestAnimationFrame(animate);
@@ -51,10 +82,7 @@ export function HeroGraphic() {
       window.removeEventListener("mousemove", handleMove);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [pointer]);
-
-  const sx = pointer ? smooth.x : -9999;
-  const sy = pointer ? smooth.y : -9999;
+  }, []);
 
   return (
     <div
@@ -65,33 +93,25 @@ export function HeroGraphic() {
       <div
         className="absolute inset-[-20%] opacity-40 [background-size:60px_60px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,black_20%,transparent_70%)] [background-image:linear-gradient(rgb(229_229_229)_1px,transparent_1px),linear-gradient(90deg,rgb(229_229_229)_1px,transparent_1px)] dark:[background-image:linear-gradient(rgb(42_42_42)_1px,transparent_1px),linear-gradient(90deg,rgb(42_42_42)_1px,transparent_1px)]"
       />
-      <div className="absolute top-[10%] right-[20%] h-[300px] w-[300px] animate-orb-float rounded-full bg-blue-600 opacity-30 blur-[60px] dark:bg-blue-400" />
-      <div
-        className="absolute bottom-[20%] left-[10%] h-[200px] w-[200px] animate-orb-float rounded-full bg-blue-600 opacity-30 blur-[60px] dark:bg-blue-400"
-        style={{ animationDelay: "-4s" }}
-      />
-      <div
-        className="absolute left-1/2 top-1/2 h-[150px] w-[150px] -translate-x-1/2 -translate-y-1/2 animate-orb-float rounded-full bg-blue-600 opacity-30 blur-[60px] dark:bg-blue-400"
-        style={{ animationDelay: "-8s" }}
-      />
-      {pointer && (
-        <>
+      {ORBS.map((orb, i) => (
+        <div
+          key={i}
+          className={`absolute ${orb.position} ${orb.size}`}
+          style={{
+            transform: orb.centered
+              ? `translate(calc(-50% + ${offset.x * orb.parallax}px), calc(-50% + ${offset.y * orb.parallax}px))`
+              : `translate(${offset.x * orb.parallax}px, ${offset.y * orb.parallax}px)`,
+          }}
+        >
           <div
-            className="absolute h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-blue-500/80 bg-blue-500/20 transition-opacity duration-150 dark:border-blue-400/80 dark:bg-blue-400/20"
+            className="h-full w-full bg-blue-600 opacity-30 blur-[60px] dark:bg-blue-400"
             style={{
-              left: sx,
-              top: sy,
+              animation: `${orb.blobKeyframe} 8s ease-in-out infinite, orb-wander 15s ease-in-out infinite`,
+              animationDelay: orb.wanderDelay,
             }}
           />
-          <div
-            className="absolute h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/10 blur-md dark:bg-blue-400/10"
-            style={{
-              left: sx,
-              top: sy,
-            }}
-          />
-        </>
-      )}
+        </div>
+      ))}
     </div>
   );
 }

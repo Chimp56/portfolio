@@ -3,8 +3,10 @@ export interface Project {
   title: string;
   description: string;
   tech: string[];
+  image?: string;
   link?: string;
   github?: string;
+  devpost?: string;
 }
 
 export const PROJECTS: Project[] = [
@@ -18,10 +20,13 @@ export const PROJECTS: Project[] = [
   },
   {
     id: "2",
-    title: "Devpost Hackathon Project",
-    description: "Hackathon-winning project showcasing innovative use of APIs and modern frontend design.",
-    tech: ["React", "Node.js"],
-    link: "https://devpost.com/Chimp56",
+    title: "PetPulse",
+    description: "AI-driven pet monitoring that translates motion, sound, and visuals into meaningful events. Features breed finder, audio analysis, health insights, vet history, and community — built for Hacklahoma 2026.",
+    tech: ["React", "FastAPI", "Python", "PostgreSQL", "Gemini", "Arduino"],
+    image: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600&h=320&fit=crop",
+    link: "https://petpulse.quantara.co",
+    devpost: "https://devpost.com/software/petpulse-l4obma",
+    github: "https://github.com/Chimp56",
   },
   {
     id: "3",
