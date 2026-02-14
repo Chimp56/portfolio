@@ -1,3 +1,21 @@
+/* Font metric overrides to reduce layout shift with font-display: swap */
+@font-face {
+  font-family: "DM Sans fallback";
+  src: local("Arial");
+  ascent-override: 90%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+  size-adjust: 107%;
+}
+@font-face {
+  font-family: "JetBrains Mono fallback";
+  src: local("Consolas");
+  ascent-override: 90%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+  size-adjust: 105%;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

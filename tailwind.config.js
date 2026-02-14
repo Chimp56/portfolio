@@ -5,8 +5,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["DM Sans", "system-ui", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"],
+        sans: ["DM Sans", "DM Sans fallback", "system-ui", "sans-serif"],
+        mono: ["JetBrains Mono", "JetBrains Mono fallback", "monospace"],
       },
       colors: {
         accent: {
