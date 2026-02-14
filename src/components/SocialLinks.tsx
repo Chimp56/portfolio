@@ -52,8 +52,8 @@ export function SocialLinks({ size = "default" }: { size?: "default" | "large" }
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-200 text-neutral-500 transition-all hover:-translate-y-0.5 hover:border-blue-600 hover:text-blue-600 dark:border-neutral-700 dark:text-neutral-400 dark:hover:border-blue-400 dark:hover:text-blue-400"
-          aria-label={label}
+          className="flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-200 text-neutral-500 transition-all hover:-translate-y-0.5 hover:border-blue-600 hover:text-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:border-neutral-700 dark:text-neutral-400 dark:hover:border-blue-400 dark:hover:text-blue-400"
+          aria-label={`${label} (opens in new tab)`}
         >
           <span className="flex h-5 w-5 items-center justify-center [&>svg]:h-full [&>svg]:w-full">
             {icon}

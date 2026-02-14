@@ -188,6 +188,8 @@ export function Home() {
               href="https://www.linkedin.com/in/vincenttran-swe"
               target="_blank"
               rel="noopener noreferrer"
+              className="focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 rounded"
+              aria-label="Reach out on LinkedIn (opens in new tab)"
             >
               Reach out on LinkedIn
             </a>{" "}
@@ -196,6 +198,8 @@ export function Home() {
               href="https://github.com/Chimp56"
               target="_blank"
               rel="noopener noreferrer"
+              className="focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 rounded"
+              aria-label="GitHub profile (opens in new tab)"
             >
               GitHub
             </a>
@@ -212,12 +216,20 @@ export function Home() {
           <p className="mb-10 text-lg text-neutral-500 dark:text-neutral-400">
             View or download my resume or full CV.
           </p>
-          <div>
-            <div className="mb-4 flex justify-center gap-2">
+          <div role="region" aria-label="Resume and CV documents">
+            <div
+              role="tablist"
+              aria-label="Document type"
+              className="mb-4 flex justify-center gap-2"
+            >
               <button
                 type="button"
+                role="tab"
+                aria-selected={activeDoc === "resume"}
+                aria-controls="doc-panel"
+                id="resume-tab"
                 onClick={() => setActiveDoc("resume")}
-                className={`rounded-lg px-5 py-2 text-[0.95rem] font-medium transition-colors ${
+                className={`rounded-lg px-5 py-2 text-[0.95rem] font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ${
                   activeDoc === "resume"
                     ? "border border-blue-600 bg-blue-600/10 text-blue-600 dark:border-blue-400 dark:bg-blue-400/10 dark:text-blue-400"
                     : "border border-neutral-200 bg-transparent text-neutral-500 hover:border-neutral-400 hover:text-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:hover:border-neutral-500 dark:hover:text-neutral-100"
@@ -227,8 +239,12 @@ export function Home() {
               </button>
               <button
                 type="button"
+                role="tab"
+                aria-selected={activeDoc === "cv"}
+                aria-controls="doc-panel"
+                id="cv-tab"
                 onClick={() => setActiveDoc("cv")}
-                className={`rounded-lg px-5 py-2 text-[0.95rem] font-medium transition-colors ${
+                className={`rounded-lg px-5 py-2 text-[0.95rem] font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ${
                   activeDoc === "cv"
                     ? "border border-blue-600 bg-blue-600/10 text-blue-600 dark:border-blue-400 dark:bg-blue-400/10 dark:text-blue-400"
                     : "border border-neutral-200 bg-transparent text-neutral-500 hover:border-neutral-400 hover:text-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:hover:border-neutral-500 dark:hover:text-neutral-100"
@@ -237,7 +253,13 @@ export function Home() {
                 Full CV
               </button>
             </div>
-            <div className="relative mb-6 w-full rounded-2xl bg-gradient-to-br from-neutral-100 to-neutral-200 p-3 shadow-lg dark:from-neutral-900 dark:to-neutral-800 dark:shadow-2xl">
+            <div
+              id="doc-panel"
+              role="tabpanel"
+              aria-labelledby={activeDoc === "resume" ? "resume-tab" : "cv-tab"}
+              tabIndex={0}
+              className="relative mb-6 w-full rounded-2xl bg-gradient-to-br from-neutral-100 to-neutral-200 p-3 shadow-lg dark:from-neutral-900 dark:to-neutral-800 dark:shadow-2xl"
+            >
               <div className="absolute inset-[6px] pointer-events-none rounded-xl border border-black/5 shadow-inner dark:border-white/5" />
               <iframe
                 src={activeDoc === "resume" ? RESUME_DRIVE_EMBED : CV_DRIVE_EMBED}
@@ -251,7 +273,8 @@ export function Home() {
                 href={activeDoc === "resume" ? RESUME_DRIVE_URL : CV_DRIVE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg border border-blue-600 px-5 py-2.5 text-sm font-medium text-blue-600 transition-colors hover:bg-blue-600 hover:text-white dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-400 dark:hover:text-neutral-900"
+                className="inline-flex items-center gap-2 rounded-lg border border-blue-600 px-5 py-2.5 text-sm font-medium text-blue-600 transition-colors hover:bg-blue-600 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-400 dark:hover:text-neutral-900"
+                aria-label={`Open ${activeDoc === "resume" ? "resume" : "CV"} in new tab`}
               >
                 Open in new tab
               </a>
@@ -260,7 +283,8 @@ export function Home() {
                   href={CV_DRIVE_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-lg border border-neutral-200 px-5 py-2.5 text-sm font-medium text-neutral-500 transition-colors hover:border-neutral-400 hover:text-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:hover:border-neutral-500 dark:hover:text-neutral-100"
+                  className="inline-flex items-center gap-2 rounded-lg border border-neutral-200 px-5 py-2.5 text-sm font-medium text-neutral-500 transition-colors hover:border-neutral-400 hover:text-neutral-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:border-neutral-700 dark:text-neutral-400 dark:hover:border-neutral-500 dark:hover:text-neutral-100"
+                  aria-label="View CV on Google Drive (opens in new tab)"
                 >
                   View on Google Drive
                 </a>

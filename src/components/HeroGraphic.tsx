@@ -44,25 +44,31 @@ export function HeroGraphic() {
   const rafRef = useRef<number>();
 
   useEffect(() => {
+    let ticking = false;
     const handleMove = (e: MouseEvent) => {
-      const el = containerRef.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const inBounds =
-        x >= 0 && x <= rect.width && y >= 0 && y <= rect.height;
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const el = containerRef.current;
+        ticking = false;
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const inBounds =
+          x >= 0 && x <= rect.width && y >= 0 && y <= rect.height;
 
-      if (inBounds) {
-        const normX = (x / rect.width - 0.5) * 2;
-        const normY = (y / rect.height - 0.5) * 2;
-        targetRef.current = {
-          x: normX * PARALLAX_STRENGTH,
-          y: normY * PARALLAX_STRENGTH,
-        };
-      } else {
-        targetRef.current = { x: 0, y: 0 };
-      }
+        if (inBounds) {
+          const normX = (x / rect.width - 0.5) * 2;
+          const normY = (y / rect.height - 0.5) * 2;
+          targetRef.current = {
+            x: normX * PARALLAX_STRENGTH,
+            y: normY * PARALLAX_STRENGTH,
+          };
+        } else {
+          targetRef.current = { x: 0, y: 0 };
+        }
+      });
     };
 
     const lerp = (start: number, end: number, t: number) =>
@@ -77,7 +83,7 @@ export function HeroGraphic() {
     };
     rafRef.current = requestAnimationFrame(animate);
 
-    window.addEventListener("mousemove", handleMove);
+    window.addEventListener("mousemove", handleMove, { passive: true });
     return () => {
       window.removeEventListener("mousemove", handleMove);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);

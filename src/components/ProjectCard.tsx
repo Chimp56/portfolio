@@ -1,6 +1,7 @@
+import { memo } from "react";
 import type { Project } from "../data/projects";
 
-export function ProjectCard({ project }: { project: Project }) {
+function ProjectCardInner({ project }: { project: Project }) {
   return (
     <article className="overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
       {project.image && (
@@ -10,11 +11,14 @@ export function ProjectCard({ project }: { project: Project }) {
               href={project.link || project.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="block h-full w-full"
+              className="block h-full w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-inset"
+              aria-label={`${project.title} project image (opens in new tab)`}
             >
               <img
                 src={project.image}
                 alt={project.title}
+                loading="lazy"
+                decoding="async"
                 className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
               />
             </a>
@@ -22,6 +26,8 @@ export function ProjectCard({ project }: { project: Project }) {
             <img
               src={project.image}
               alt={project.title}
+              loading="lazy"
+              decoding="async"
               className="h-full w-full object-cover"
             />
           )}
@@ -48,7 +54,8 @@ export function ProjectCard({ project }: { project: Project }) {
             href={project.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+            className="text-blue-600 hover:text-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 rounded dark:text-blue-400 dark:hover:text-blue-300"
+            aria-label={`View ${project.title} project (opens in new tab)`}
           >
             View project
           </a>
@@ -58,7 +65,8 @@ export function ProjectCard({ project }: { project: Project }) {
             href={project.devpost}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+            className="text-blue-600 hover:text-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 rounded dark:text-blue-400 dark:hover:text-blue-300"
+            aria-label={`${project.title} on Devpost (opens in new tab)`}
           >
             Devpost
           </a>
@@ -68,7 +76,8 @@ export function ProjectCard({ project }: { project: Project }) {
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+            className="text-blue-600 hover:text-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 rounded dark:text-blue-400 dark:hover:text-blue-300"
+            aria-label={`${project.title} on GitHub (opens in new tab)`}
           >
             GitHub
           </a>
@@ -78,3 +87,5 @@ export function ProjectCard({ project }: { project: Project }) {
     </article>
   );
 }
+
+export const ProjectCard = memo(ProjectCardInner);
