@@ -3,7 +3,7 @@ import type { Project } from "../data/projects";
 
 function ProjectCardInner({ project }: { project: Project }) {
   return (
-    <article className="overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900">
+    <article className="group overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-blue-200 dark:border-neutral-800 dark:bg-neutral-900 dark:hover:border-blue-800">
       {project.image && (
         <div className="block aspect-video w-full overflow-hidden bg-neutral-100 dark:bg-neutral-800">
           {(project.link || project.github) ? (
@@ -42,7 +42,7 @@ function ProjectCardInner({ project }: { project: Project }) {
         {project.tech.map((t) => (
           <span
             key={t}
-            className="rounded-md bg-neutral-100 px-2 py-0.5 font-mono text-xs text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400"
+            className="rounded-md bg-neutral-100 px-2 py-0.5 font-mono text-xs text-neutral-500 transition-colors duration-200 group-hover:bg-blue-50 group-hover:text-blue-700 dark:bg-neutral-800 dark:text-neutral-400 dark:group-hover:bg-blue-950/50 dark:group-hover:text-blue-300"
           >
             {t}
           </span>

@@ -29,7 +29,7 @@ export const PROJECTS: Project[] = [
     id: "3",
     title: "Quantara",
     description: "Organization and platform for research tools and portfolio projects — Wildloop, PetPulse, LizardKohn, and more. Hosts applications and utilities under the quantara.co domain.",
-    tech: ["DNS", "Hosting", "Research"],
+    tech: ["React","Cloudflare", "Firebase", "Research"],
     link: "https://quantara.co",
   },
   {

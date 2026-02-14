@@ -11,32 +11,74 @@ import {
   CV_DRIVE_EMBED,
 } from "../data/links";
 
+function ExperienceIcon({
+  icon,
+  company,
+}: {
+  icon?: string;
+  company: string;
+}) {
+  const [imgFailed, setImgFailed] = useState(false);
+  const showImg = icon && !imgFailed;
+  return (
+    <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-neutral-200 bg-neutral-50 dark:border-neutral-700 dark:bg-neutral-800">
+      {showImg ? (
+        <img
+          src={icon}
+          alt=""
+          className="h-8 w-8 object-contain"
+          loading="lazy"
+          onError={() => setImgFailed(true)}
+        />
+      ) : (
+        <span
+          className="text-lg font-semibold text-neutral-500 dark:text-neutral-400"
+          aria-hidden
+        >
+          {company.charAt(0)}
+        </span>
+      )}
+    </div>
+  );
+}
+
 const TECH_STACK = ["Python", "TypeScript", "React", "Django", "AWS", "Docker"];
 
-const EXPERIENCES = [
+const EXPERIENCES: {
+  title: string;
+  company: string;
+  period: string;
+  desc: string;
+  /** Optional path to company/role logo, e.g. "/logos/ou.svg". Add assets to public/logos/ and set here. */
+  icon?: string;
+}[] = [
   {
     title: "ML Graduate Research Assistant",
     company: "University of Oklahoma",
     period: "Aug. 2025 – Present",
     desc: "Designed, deployed, and maintained 3 production-grade backend services using Django, Python, and SQL on AWS. Built end-to-end data pipelines generating 50K+ synthetic samples to fine-tune a sequence-to-sequence LLM. Implemented authentication, role-based access control, and API contracts. Improved system scalability and productivity by 50%.",
+    icon: "/logos/ou.png",
   },
   {
     title: "Software Development Intern",
     company: "Paycom",
     period: "May 2025 – Aug. 2025",
     desc: "Built and deployed a production recommendation service using FastAPI, Docker, and Kubernetes, increasing user engagement by 13%. Designed ETL pipelines for ML models, sustaining 81% minimum relevance rate. Implemented CI/CD pipelines reducing developer overhead by 2+ hours/week.",
+    icon: "/logos/payc.png",
   },
   {
     title: "Software Undergraduate Research Assistant",
     company: "University of Oklahoma",
     period: "May 2023 – May 2025",
     desc: "Developed backend analytics service using Python, Django, PostgreSQL, and NLP models, improving processing speed by 25%. Designed microservice-based backend architecture. Optimized caching and query strategies, reducing API calls by 60% and cloud costs by 30%.",
+    icon: "/logos/ou.png",
   },
   {
     title: "Software Development Intern",
     company: "Paycom",
     period: "May 2024 – Aug. 2024",
     desc: "Designed SQL sharding strategy for 100K+ records. Deployed full-stack web application with React SPA and PHP MVC backend. Collaborated in agile sprints to build C# backend REST API for applicant tracking system.",
+    icon: "/logos/payc.png"
   },
 ];
 
@@ -99,7 +141,7 @@ export function Home() {
             {TECH_STACK.map((tech) => (
               <span
                 key={tech}
-                className="rounded-lg border border-neutral-200 bg-white px-3 py-1.5 font-mono text-sm text-neutral-500 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400"
+                className="rounded-lg border border-neutral-200 bg-white px-3 py-1.5 font-mono text-sm text-neutral-500 transition-all duration-200 hover:scale-105 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:border-blue-600 dark:hover:bg-blue-950/50 dark:hover:text-blue-300"
               >
                 {tech}
               </span>
@@ -124,7 +166,7 @@ export function Home() {
                 key={i}
                 className="grid grid-cols-[auto_1fr] gap-6 border-b border-neutral-200 py-8 last:border-b-0 dark:border-neutral-800"
               >
-                <div className="mt-1.5 h-3 w-3 shrink-0 rounded-full bg-blue-600 dark:bg-blue-400" />
+                <ExperienceIcon icon={exp.icon} company={exp.company} />
                 <div className="min-w-0">
                   <span className="mb-1 block font-mono text-xs text-neutral-500 dark:text-neutral-400">
                     {exp.period}

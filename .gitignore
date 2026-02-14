@@ -34,3 +34,8 @@ yarn-error.log*
 pnpm-lock.yaml
 
 dist
+
+# Test
+/coverage
+cypress/videos
+cypress/screenshots

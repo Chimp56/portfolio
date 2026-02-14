@@ -34,6 +34,21 @@ npm run build
 npm run preview
 ```
 
+## Testing
+
+- **Unit / component (Jest + React Testing Library):**
+  ```bash
+  npm run test          # run once
+  npm run test:watch    # watch mode
+  npm run test:coverage # with coverage
+  ```
+- **E2E (Cypress):** Start the dev server, then:
+  ```bash
+  npm run cypress:open  # interactive
+  npm run cypress:run   # headless
+  npm run e2e           # start dev server, run Cypress, then exit
+  ```
+
 ## Customization
 
 ### Social Links & Resume
