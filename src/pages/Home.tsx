@@ -214,7 +214,7 @@ export function Home() {
       </section>
 
       {/* Contact */}
-      <section id="contact" className="relative min-h-screen pt-24">
+      <section id="contact" className="relative pt-24">
         <div className="mx-auto max-w-[900px] px-8 py-16">
           <h2 className="mb-2 text-3xl font-bold tracking-tight sm:text-4xl">
             Contact

@@ -84,4 +84,4 @@ Firebase Analytics will activate automatically when configured.
 - [LinkedIn](https://www.linkedin.com/in/vincenttran-swe)
 - [GitHub](https://github.com/Chimp56)
 - [Devpost](https://devpost.com/Chimp56)
-- [Resume](https://drive.google.com/file/d/17lAugLzhC2WpAb3VyXo4mgcC4rGFIw-u/view)
+- [Resume](https://drive.google.com/file/d/13Apxh9oe1lm0v86Etp6PUKHEsgNNtPBz/view)
